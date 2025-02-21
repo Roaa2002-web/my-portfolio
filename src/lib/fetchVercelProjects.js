@@ -1,5 +1,3 @@
-// src/lib/fetchVercelProjects.js
-
 export const fetchVercelProjects = async () => {
     const token = process.env.NEXT_PUBLIC_VERCEL_API_TOKEN;
 

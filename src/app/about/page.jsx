@@ -14,7 +14,7 @@ const AboutPage = () => {
     learnMore: "",
   });
 
-  // 🔥 تحديث النصوص بعد تحميل الترجمة لمنع أخطاء الـ hydration
+  // تحديث النصوص بعد تحميل الترجمة
   useEffect(() => {
     setTranslatedTexts({
       aboutTitle: t("aboutTitle"),
@@ -28,8 +28,8 @@ const AboutPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-  <section className="flex flex-col md:flex-row items-center justify-center px-6 md:px-20 py-16 bg-gradient-to-b from-blue-300 to-blue-50 dark:from-gray-800 dark:to-gray-900 min-h-screen w-full flex-grow">
-  {/* ✅ صورة تعبيرية */}
+    <section className="flex flex-col md:flex-row items-center justify-center px-6 md:px-20 py-16 bg-gradient-to-b from-blue-300 to-blue-50 dark:from-gray-800 dark:to-gray-900 min-h-screen w-full flex-grow">
+      {/* ✅ صورة تعبيرية */}
       <div className="relative w-full md:w-1/2 flex justify-center mt-8">
         <div className="relative rounded-3xl overflow-hidden shadow-lg">
           <Image
@@ -48,8 +48,6 @@ const AboutPage = () => {
           <FaCode className="text-blue-500 mr-2" /> {translatedTexts.aboutTitle}
         </h2>
         <p className="mt-4 text-gray-600 dark:text-gray-300">{translatedTexts.aboutDescription}</p>
-
-      
 
         {/* ✅ زر للمزيد من المعلومات */}
         <div className="mt-6">

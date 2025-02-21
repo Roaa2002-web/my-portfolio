@@ -4,29 +4,30 @@ import { fetchYouTubePlaylists } from "../../../lib/fetchYouTubePlaylists";
 import { fetchVideosFromPlaylist, fetchAllChannelVideos } from "../../../lib/fetchYouTubeVideos";
 import VideoCard from "../../../components/VideoCard";
 import PlaylistFilter from "../../../components/PlaylistFilter";
+import { useTranslation } from "react-i18next";  // استيراد الترجمة
 
 const VideosPage = () => {
+    const { t } = useTranslation();  // استخدام الترجمة
     const [playlists, setPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState("all");
     const [videos, setVideos] = useState([]);
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);  // حالة جديدة للتحميل
+    const [loading, setLoading] = useState(false);
 
-    // مرجع لشريط الفيديوهات لتفعيل السحب
     const scrollRef = useRef(null);
     let isDragging = false;
     let startX, scrollLeft;
 
     useEffect(() => {
         const loadPlaylists = async () => {
-            setLoading(true);  // تفعيل حالة التحميل عند البدء
+            setLoading(true);
             try {
                 const fetchedPlaylists = await fetchYouTubePlaylists();
                 setPlaylists(fetchedPlaylists);
             } catch (error) {
-                setError("فشل في جلب القوائم.");
+                setError(t("fetchPlaylistsError"));  // استخدام الترجمة في الخطأ
             } finally {
-                setLoading(false);  // إيقاف حالة التحميل بعد الانتهاء
+                setLoading(false);
             }
         };
 
@@ -35,7 +36,7 @@ const VideosPage = () => {
 
     useEffect(() => {
         const loadVideos = async () => {
-            setLoading(true);  // تفعيل حالة التحميل عند البدء
+            setLoading(true);
             try {
                 let fetchedVideos = [];
                 if (selectedPlaylist === "all") {
@@ -45,16 +46,15 @@ const VideosPage = () => {
                 }
                 setVideos(fetchedVideos);
             } catch (error) {
-                setError("فشل في جلب الفيديوهات.");
+                setError(t("fetchVideosError"));  // استخدام الترجمة في الخطأ
             } finally {
-                setLoading(false);  // إيقاف حالة التحميل بعد الانتهاء
+                setLoading(false);
             }
         };
 
         loadVideos();
     }, [selectedPlaylist]);
 
-    // دوال السحب بالماوس واللمس
     const startDragging = (e) => {
         isDragging = true;
         startX = e.pageX || e.touches[0].pageX;
@@ -69,28 +69,23 @@ const VideosPage = () => {
         if (!isDragging) return;
         e.preventDefault();
         const x = e.pageX || e.touches[0].pageX;
-        const walk = (x - startX) * 2; // تحكم بسرعة السحب
+        const walk = (x - startX) * 2;
         scrollRef.current.scrollLeft = scrollLeft - walk;
     };
 
     return (
         <div className="bg-cover bg-center min-h-screen p-6 flex flex-col items-center" style={{ backgroundImage: "url('/images/c.jpg')" }}>
             <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mt-16 mb-6">
-                فيديوهات الرسوم المتحركة
+                {t("animationVideosTitle")}  {/* استخدام الترجمة لعنوان الفيديوهات */}
             </h1>
 
-            {/* فلتر القوائم */}
             <div className="w-full max-w-3xl mb-8">
                 <PlaylistFilter playlists={playlists} selectedPlaylist={selectedPlaylist} setSelectedPlaylist={setSelectedPlaylist} />
             </div>
 
-            {/* عرض خطأ إن وجد */}
-            {error && <p className="text-red-500 text-lg">{error}</p>}
+            {error && <p className="text-red-500 text-lg">{error}</p>}  {/* عرض الخطأ إذا كان هناك */}
+            {loading && <p className="text-lg text-gray-700 dark:text-gray-300">{t("loadingText")}</p>}  {/* عرض النص عند التحميل */}
 
-            {/* عرض رسالة "جاري التحميل" */}
-            {loading && <p className="text-lg text-gray-700 dark:text-gray-300">جاري التحميل...</p>}
-
-            {/* شريط تمرير الفيديوهات بالسحب مع إخفاء شريط التمرير تمامًا */}
             <div
                 ref={scrollRef}
                 className="w-full max-w-6xl overflow-x-auto whitespace-nowrap flex space-x-4 p-4 cursor-grab active:cursor-grabbing custom-scrollbar-hide"
@@ -109,14 +104,13 @@ const VideosPage = () => {
                 ))}
             </div>
 
-            {/* CSS لإخفاء شريط التمرير */}
             <style jsx>{`
                 .custom-scrollbar-hide {
-                    scrollbar-width: none; /* Firefox */
-                    -ms-overflow-style: none; /* IE and Edge */
+                    scrollbar-width: none;
+                    -ms-overflow-style: none;
                 }
                 .custom-scrollbar-hide::-webkit-scrollbar {
-                    display: none; /* Chrome, Safari, Opera */
+                    display: none;
                 }
             `}</style>
         </div>

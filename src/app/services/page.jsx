@@ -34,8 +34,8 @@ const ServicesPage = () => {
   }, [t]);
 
   return (
-<section className="flex flex-col md:flex-row items-center justify-center px-6 md:px-20 py-16 bg-gradient-to-b from-blue-300 to-blue-50 dark:from-gray-800 dark:to-gray-900 min-h-screen w-full flex-grow">
-<div className="relative w-full md:w-1/2 flex justify-center mt-8">
+    <section className="flex flex-col md:flex-row items-center justify-center px-6 md:px-20 py-16 bg-gradient-to-b from-blue-300 to-blue-50 dark:from-gray-800 dark:to-gray-900 min-h-screen w-full flex-grow">
+      <div className="relative w-full md:w-1/2 flex justify-center mt-8">
         <div className="relative rounded-3xl overflow-hidden shadow-lg">
           <Image
             src="/images/Hi.jpg"
@@ -51,7 +51,7 @@ const ServicesPage = () => {
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex justify-center items-center">
           <FaBullseye className="text-blue-500 mr-2" /> {translatedTexts.servicesTitle}
         </h2>
-        <p className="mt-4 flex justify-center items-center  text-gray-600 dark:text-gray-300">{translatedTexts.servicesDescription}</p>
+        <p className="mt-4 flex justify-center items-center text-gray-600 dark:text-gray-300">{translatedTexts.servicesDescription}</p>
 
         <section className="mt-12 text-center">
           <div className="flex justify-center items-center space-x-4">
@@ -82,8 +82,6 @@ const ServicesPage = () => {
           </div>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">{translatedTexts.designServiceDescription}</p>
         </section>
-
-        
       </div>
     </section>
   );
